@@ -3,9 +3,9 @@ spring:
     name: fraud
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    url: postgresql://nhis_admin:CnMlT8k0S480rXzm9XonQUxtMu5bevnb@dpg-d4242hqli9vc738200ag-a/nhis_fraud
+    username: nhis_admin
+    password: CnMlT8k0S480rXzm9XonQUxtMu5bevnb
 
   jpa:
     hibernate:
