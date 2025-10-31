@@ -149,7 +149,28 @@ public class IngestionService {
 	private String opt(String s) { return s == null ? null : s.trim(); }
 	private Double parseDouble(String s) { try { return s == null || s.isBlank() ? null : Double.parseDouble(s); } catch (Exception e) { return null; } }
 	private BigDecimal parseBigDecimal(String s) { try { return s == null || s.isBlank() ? null : new BigDecimal(s); } catch (Exception e) { return null; } }
-	private LocalDate parseDate(String s) { try { return (s == null || s.isBlank()) ? null : LocalDate.parse(s, DateTimeFormatter.ISO_DATE); } catch (Exception e) { return null; } }
+	private LocalDate parseDate(String s) {
+		if (s == null || s.isBlank()) return null;
+		s = s.trim();
+		// Try multiple date formats
+		DateTimeFormatter[] formatters = {
+			DateTimeFormatter.ISO_DATE,                    // YYYY-MM-DD
+			DateTimeFormatter.ofPattern("yyyy-MM-dd"),     // YYYY-MM-DD (explicit)
+			DateTimeFormatter.ofPattern("MM/dd/yyyy"),    // MM/DD/YYYY
+			DateTimeFormatter.ofPattern("dd/MM/yyyy"),      // DD/MM/YYYY
+			DateTimeFormatter.ofPattern("yyyy/MM/dd"),      // YYYY/MM/DD
+			DateTimeFormatter.ofPattern("M/d/yyyy"),       // M/D/YYYY
+			DateTimeFormatter.ofPattern("d/M/yyyy"),        // D/M/YYYY
+		};
+		for (DateTimeFormatter fmt : formatters) {
+			try {
+				return LocalDate.parse(s, fmt);
+			} catch (Exception ignored) {
+				// Try next format
+			}
+		}
+		return null;
+	}
 }
 
 
