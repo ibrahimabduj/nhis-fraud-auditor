@@ -3,9 +3,9 @@ spring:
     name: fraud
 
   datasource:
-    url: postgresql://nhis_admin:CnMlT8k0S480rXzm9XonQUxtMu5bevnb@dpg-d4242hqli9vc738200ag-a/nhis_fraud
-    username: nhis_admin
-    password: CnMlT8k0S480rXzm9XonQUxtMu5bevnb
+    url: ${DATABASE_URL:jdbc:postgresql://dpg-d4242hqli9vc738200ag-a.oregon-postgres.render.com:5432/nhis_fraud}
+    username: ${DATABASE_USERNAME:nhis_admin}
+    password: ${DATABASE_PASSWORD:CnMlT8k0S480rXzm9XonQUxtMu5bevnb}
 
   jpa:
     hibernate:
@@ -16,6 +16,7 @@ spring:
       hibernate:
         jdbc:
           time_zone: UTC
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   servlet:
     multipart:
